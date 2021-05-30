@@ -9,8 +9,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    - name: Install boost
+      run: sudo apt-get install libboost-thread-dev
+    
     - name: build
-      run: g++ -std=c++11 -Wall -Wextra -o testchecker BMS_Core/*.* BMS_Sender/*.*
+      run: g++ -std=c++11 -Wall -Wextra -o testchecker BMS_Core/*.cpp BMS_Sender/*.cpp
       
     - name: run
       run: ./testchecker
+      

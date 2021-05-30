@@ -74,6 +74,7 @@ TEST_CASE("data generation test - SoC with Float Data") {
 
 	using boost::property_tree::ptree;
 	ptree::const_iterator iter = Jsondata.begin();
+
 	++iter;
 
 	std::string parameterName = iter->first;
