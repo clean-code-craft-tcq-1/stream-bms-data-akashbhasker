@@ -4,6 +4,8 @@
 *
 **************************************************************************************/
 
+#include <string>
+
 #ifndef BMSCORE_H_
 #define BMSCORE_H_
 
@@ -16,17 +18,17 @@ struct BatteryParameterDataStruct
 
 class BMS
 {
-	BatteryParameterDataStruct parameterData;
-
 	float getSoCReading();
 	int getTemperatureReading();
 
 public:
-	BMS();
-	~BMS();
+	BMS(){}
+	~BMS(){}
 
-	void readBatteryParametersInput();
-	BatteryParameterDataStruct outputBatteryParameterData();
+	BatteryParameterDataStruct readBatteryParametersInput_FromSensors();
+	std::string getBatteryParametersData_JsonFormat_String();
+
+	static std::string formatOutputToJson(BatteryParameterDataStruct parameterdata);
 
 };
 

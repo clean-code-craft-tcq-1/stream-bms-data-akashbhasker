@@ -1,0 +1,16 @@
+name: Build and Run
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: build
+      run: g++ -std=c++11 -Wall -Wextra -o testchecker BMS_Core/*.* BMS_Sender/*.*
+      
+    - name: run
+      run: ./testchecker
