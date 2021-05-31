@@ -31,47 +31,37 @@ void printToConsole(std::string data)
 }
 
 /**
- * Description     : Method to check if condition to STOP Sending Parameter data is satisfied
- *                   Condition to stop : console input as "STOP"
- *
- */
-void checkFor_Stop()
-{
-    std::string input;
-    while(true && startflag)
-    {
-        std::cin >> input;
-        if(input.compare(STOP_CONDITION) == SUCCESS)
-        {
-        	startflag = false;
-        	break;
-        }
-    }
-}
-
-/**
- * Description     : Method to check if condition to START Sending Parameter data is satisfied
+ * Description     : Method to check and handle console input
  *                   Condition to start : console input as "START"
+ *                   Condition to stop : console input as "STOP"
  *                   Condition to get list of Parameters : console input as "GETPARAMS"
  *
  */
-void checkFor_Start()
+bool checkFor_Input()
 {
-    std::string input;
-    while(true)
-    {
-        std::cin >> input;
-        if(input.compare(START_CONDITION) == SUCCESS)
-        {
-        	startflag = true;
-        	break;
-        }
-        else if(input.compare(GET_PARAMS) == SUCCESS)
-        {
-        	BMS batteryObj;
-        	cout<<batteryObj.getparametersList();
-        }
-    }
+	std::string input;
+	{
+		while(true)
+		{
+			std::cin >> input;
+
+			if(input.compare(GET_PARAMS) == SUCCESS)
+			{
+				BMS batteryObj;
+				cout<<batteryObj.getparametersList();
+			}
+			else if(startflag && input.compare(STOP_CONDITION) == SUCCESS)
+			{
+				startflag = false;
+				return false;
+			}
+			if(!startflag &&  input.compare(START_CONDITION) == SUCCESS)
+			{
+				startflag = true;
+				return true;
+			}
+		}
+	}
 }
 
 /**
@@ -99,12 +89,15 @@ void start_Sender()
  */
 int main()
 {
-	checkFor_Start();
-	std::thread inp(start_Sender);
-	std::thread outp(checkFor_Stop);
+	bool startSender = checkFor_Input();
+	if(startSender)
+	{
+		std::thread inp(start_Sender);
+		std::thread outp(checkFor_Input);
 
-	outp.join();
-	inp.join();
+		outp.join();
+		inp.join();
+	}
 
 	return 0;
 
