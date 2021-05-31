@@ -11,7 +11,7 @@
 
 struct BatteryParameterDataStruct
 {
-	double SoC;
+	float SoC;
 	int temperature;
 };
 
@@ -27,6 +27,7 @@ public:
 
 	BatteryParameterDataStruct readBatteryParametersInput_FromSensors();
 	std::string getBatteryParametersData_JsonFormat_String();
+	std::string getparametersList();
 
 	static std::string formatOutputToJson(BatteryParameterDataStruct parameterdata);
 

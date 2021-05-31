@@ -70,6 +70,26 @@ string BMS::getBatteryParametersData_JsonFormat_String()
 }
 
 /**
+ * Description     : Method to return the parameters list in JSON formatted string
+ *                   Return String format : {"ParameterName_1":"dataType","ParameterName_2":"dataType"}
+ *
+ */
+string BMS::getparametersList()
+{
+	BatteryParameterDataStruct data;
+	boost::property_tree::ptree Jsondata;
+	Jsondata.put("Temperature_in_Celcius", typeid(data.temperature).name());
+	Jsondata.put("SoC_in_Percent", typeid(data.SoC).name());
+
+	stringstream output;
+	boost::property_tree::json_parser::write_json(output, Jsondata,false);
+
+	return output.str();
+
+}
+
+
+/**
  * Description     : Utility Method to convert battery parameter data to string format
  *                   Return String format : {"Parameter_1":"data","Parameter_2":"data"}
  *

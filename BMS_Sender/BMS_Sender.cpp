@@ -15,6 +15,7 @@ using namespace std;
 
 #define START_CONDITION "START"
 #define STOP_CONDITION  "STOP"
+#define GET_PARAMS      "GETPARAMS"
 #define OUTPUT_INTERVAL_IN_SEC  1
 #define SUCCESS  0
 
@@ -51,6 +52,7 @@ void checkFor_Stop()
 /**
  * Description     : Method to check if condition to START Sending Parameter data is satisfied
  *                   Condition to start : console input as "START"
+ *                   Condition to get list of Parameters : console input as "GETPARAMS"
  *
  */
 void checkFor_Start()
@@ -63,6 +65,11 @@ void checkFor_Start()
         {
         	startflag = true;
         	break;
+        }
+        else if(input.compare(GET_PARAMS) == SUCCESS)
+        {
+        	BMS batteryObj;
+        	cout<<batteryObj.getparametersList();
         }
     }
 }
