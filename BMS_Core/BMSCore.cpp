@@ -17,6 +17,7 @@
 
 using namespace std;
 
+
 float randFloat_ZeroToOne()
 {
     return rand() / (RAND_MAX + 1.);
@@ -27,18 +28,28 @@ int randInt_ZeroToHundred()
 	return rand() % 100;
 }
 
-
+/**
+ * Description     : Method to get the current SoC reading
+ *
+ */
 float BMS::getSoCReading()
 {
 	return randFloat_ZeroToOne();
 }
 
+/**
+ * Description     : Method to get the current Temperature reading
+ *
+ */
 int BMS::getTemperatureReading()
 {
 	return randInt_ZeroToHundred();
 }
 
-
+/**
+ * Description     : Method to read and return the battery parameter state from Sensors
+ *
+ */
 BatteryParameterDataStruct BMS::readBatteryParametersInput_FromSensors()
 {
 	BatteryParameterDataStruct parameterData;
@@ -48,12 +59,21 @@ BatteryParameterDataStruct BMS::readBatteryParametersInput_FromSensors()
 	return parameterData;
 }
 
+/**
+ * Description     : Method to read the current batter parameter state and return it in JSON formatted string
+ *
+ */
 string BMS::getBatteryParametersData_JsonFormat_String()
 {
 	BatteryParameterDataStruct parameterData  = readBatteryParametersInput_FromSensors();
 	return formatOutputToJson(parameterData);
 }
 
+/**
+ * Description     : Utility Method to convert battery parameter data to string format
+ *                   Return String format : {"Parameter_1":"data","Parameter_2":"data"}
+ *
+ */
 string BMS::formatOutputToJson(BatteryParameterDataStruct parameterdata)
 {
 	boost::property_tree::ptree Jsondata;
