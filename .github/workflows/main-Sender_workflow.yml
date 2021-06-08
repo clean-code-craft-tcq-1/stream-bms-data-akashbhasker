@@ -14,8 +14,8 @@ jobs:
       run: sudo apt-get install libboost-thread-dev
     
     - name: build
-      run: g++ -std=c++11 -Wall -Wextra -pthread -o testchecker BMS_Core/*.cpp BMS_Sender/*.cpp
+      run: g++ -std=c++11 -Wall -Wextra -pthread -o senderExecutable BMS_Core/*.cpp BMS_Sender/*.cpp
       
-    - name: run
-      run: ./testchecker
+ #   - name: run
+ #     run: ./senderExecutable
       

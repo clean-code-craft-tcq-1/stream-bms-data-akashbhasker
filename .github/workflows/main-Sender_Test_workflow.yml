@@ -7,7 +7,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-
     steps:
     
     - uses: actions/checkout@v2
@@ -16,7 +15,17 @@ jobs:
      run: sudo apt-get install libboost-thread-dev
       
     - name: build
-      run: g++ -std=c++11 -Wall -Wextra -o testchecker BMS_Core/*.cpp BMS_Test/*.cpp
+      run: g++ -fprofile-arcs -ftest-coverage -std=c++11 -Wall -Wextra -pthread -o sender_test BMS_Core/*.cpp BMS_Test/*.cpp
       
     - name: run
-      run: ./testchecker
+      run: ./sender_test
+      
+    - name: collect coverage
+      run: gcovr -r . --html --html-details -o coverage.html
+
+    - name: create coverage artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage
+        path: ./*.html
+        retention-days: 1

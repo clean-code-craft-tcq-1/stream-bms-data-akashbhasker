@@ -16,10 +16,11 @@ using namespace std;
 #define START_CONDITION "START"
 #define STOP_CONDITION  "STOP"
 #define GET_PARAMS      "GETPARAMS"
-#define OUTPUT_INTERVAL_IN_SEC  1
+#define SET_OUPUTRATE   "SETOUTPUTRATE"
 #define SUCCESS  0
 
 bool startflag = false;
+int outputRate_in_ms = 1000;
 
 /**
  * Description     : Method to print provided string data to console
@@ -32,9 +33,10 @@ void printToConsole(std::string data)
 
 /**
  * Description     : Method to check and handle console input
- *                   Condition to start : console input as "START"
- *                   Condition to stop : console input as "STOP"
+ *                   Condition to start                  : console input as "START"
+ *                   Condition to stop                   : console input as "STOP"
  *                   Condition to get list of Parameters : console input as "GETPARAMS"
+ *                   Condition to set output Rate        : console input as "SETOUTPUTRATE rate_in_ms"
  *
  */
 bool checkFor_Input()
@@ -55,10 +57,19 @@ bool checkFor_Input()
 				startflag = false;
 				return false;
 			}
-			if(!startflag &&  input.compare(START_CONDITION) == SUCCESS)
+			else if(!startflag &&  input.compare(START_CONDITION) == SUCCESS)
 			{
 				startflag = true;
 				return true;
+			}
+			else if(input.compare(SET_OUPUTRATE) == SUCCESS)
+			{
+				unsigned int outputrate = 1000;
+				cin>>outputrate;
+				if(outputrate != 0)
+				{
+					outputRate_in_ms = outputrate;
+				}
 			}
 		}
 	}
@@ -79,7 +90,7 @@ void start_Sender()
 
 		printToConsole(paramterData);
 
-		std::this_thread::sleep_for (std::chrono::seconds(OUTPUT_INTERVAL_IN_SEC));
+		std::this_thread::sleep_for (std::chrono::milliseconds(outputRate_in_ms));
 	}
 }
 

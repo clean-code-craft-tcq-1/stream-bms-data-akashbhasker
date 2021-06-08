@@ -15,6 +15,8 @@
 #include "catch.hpp"
 #include "../BMS_Core/BMSCore.h"
 
+using boost::property_tree::ptree;
+
 bool isNumber(const std::string& str)
 {
     for (char const &c : str) {
@@ -31,26 +33,31 @@ bool isFloat( std::string myString ) {
     return iss.eof() && !iss.fail();
 }
 
+boost::property_tree::ptree getJsonFromString(std::string data)
+{
+	std::stringstream input;
+	input.str(data);
+	boost::property_tree::ptree Jsondata;
+	boost::property_tree::json_parser::read_json(input,Jsondata);
+
+	return Jsondata;
+}
+
+
 TEST_CASE("data generation test - NOT NULL") {
 
 	BMS bmsTestObj;
 	std::string paramterData = bmsTestObj.getBatteryParametersData_JsonFormat_String();
 
-		REQUIRE(paramterData.empty() == false);
+	REQUIRE(paramterData.empty() == false);
 
 }
 
 TEST_CASE("data generation test - Temperature with Integer data") {
 
 	BMS bmsTestObj;
-	std::string paramterData = bmsTestObj.getBatteryParametersData_JsonFormat_String();
 
-	std::stringstream input;
-	input.str(paramterData);
-	boost::property_tree::ptree Jsondata;
-	boost::property_tree::json_parser::read_json(input,Jsondata);
-
-	using boost::property_tree::ptree;
+	boost::property_tree::ptree Jsondata = getJsonFromString(bmsTestObj.getBatteryParametersData_JsonFormat_String());
 	ptree::const_iterator iter = Jsondata.begin();
 
 	std::string parameterName = iter->first;
@@ -65,16 +72,9 @@ TEST_CASE("data generation test - Temperature with Integer data") {
 TEST_CASE("data generation test - SoC with Float Data") {
 
 	BMS bmsTestObj;
-	std::string paramterData = bmsTestObj.getBatteryParametersData_JsonFormat_String();
 
-	std::stringstream input;
-	input.str(paramterData);
-	boost::property_tree::ptree Jsondata;
-	boost::property_tree::json_parser::read_json(input,Jsondata);
-
-	using boost::property_tree::ptree;
+	boost::property_tree::ptree Jsondata = getJsonFromString(bmsTestObj.getBatteryParametersData_JsonFormat_String());
 	ptree::const_iterator iter = Jsondata.begin();
-
 	++iter;
 
 	std::string parameterName = iter->first;
