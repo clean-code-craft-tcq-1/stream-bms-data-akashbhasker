@@ -10,9 +10,9 @@ jobs:
     steps:
     
     - uses: actions/checkout@v2
-    
-   - name: Install boost
-     run: sudo apt-get install libboost-thread-dev
+   
+    - name: Install boost
+      run: sudo apt-get install libboost-thread-dev
       
     - name: build
       run: g++ -fprofile-arcs -ftest-coverage -std=c++11 -Wall -Wextra -pthread -o sender_test BMS_Core/*.cpp BMS_Test/*.cpp
