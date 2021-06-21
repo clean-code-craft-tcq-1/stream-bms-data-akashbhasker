@@ -1,0 +1,21 @@
+name: Build and Run
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install boost
+      run: sudo apt-get install libboost-thread-dev
+    
+    - name: build
+      run: g++ -std=c++11 -Wall -Wextra -pthread -o senderExecutable BMS_Core/*.cpp BMS_Sender/*.cpp
+      
+ #   - name: run
+ #     run: ./senderExecutable
+      
