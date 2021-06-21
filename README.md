@@ -72,3 +72,30 @@ This section lists the minimum functionality of the Sender and Receiver.
 ## Quality Parameters
 
 Setup the quality parameters of your project (duplication, complexity, coverage, warnings) using the GitHub workflow yml files.
+
+# Implementation
+## The Sender 
+Sender is designed to output a continous stream of Paramater Data based on JSON Format
+Supported Format : JSON String : {"ParameterName_1":"dataType","ParameterName_2":"dataType",...}
+
+It provides a well build interface to handle the stream of Data. The Client can customize the stream as per its requirement by providing the input to Console
+The Interface provides following Functionality :
+ *                   Condition to start                  : console input as "START"
+ *                   Condition to stop                   : console input as "STOP"
+ *                   Condition to get list of Parameters : console input as "GETPARAMS"
+ *                   Condition to set output Rate        : console input as "SETOUTPUTRATE rate_in_ms"
+
+#### Architecture
+The Sender is divided into 3 Main Parts 
+- BMSSender: A Custom sender which is designed to Handle Console Input and Redirect the stream of data to Console 
+- BMSCore  : Core Functionality of the BMS which reads all the parameter's data from various input sources and provides as output
+- BMSTest  : The Unit Test Functionality of BMS Core
+
+The Intention behind this architecture is to ensure Core Handling is kept common so that the data redirection can be done to any Output Sinks
+
+#### Working Example :
+![Screenshot]
+(Sender_Screenshot.png)
+
+
+
