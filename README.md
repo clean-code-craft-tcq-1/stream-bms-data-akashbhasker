@@ -94,8 +94,5 @@ The Sender is divided into 3 Main Parts
 The Intention behind this architecture is to ensure Core Handling is kept common so that the data redirection can be done to any Output Sinks
 
 #### Working Example :
-![Screenshot]
-(Sender_Screenshot.png)
-
-
+![Screenshot](Sender_Screenshot.png)
 
